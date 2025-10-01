@@ -30,6 +30,3 @@ EOF
 
 echo "📊 Rodando script de mapeamento UUID..."
 python manage.py map_groups_and_permissions
-
-echo "🌍 Subindo servidor Django..."
-gunicorn backend.wsgi:application --bind 0.0.0.0:\$PORT --workers 4
