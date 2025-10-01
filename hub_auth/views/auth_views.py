@@ -108,9 +108,16 @@ def logout(request):
         response.delete_cookie(
             "refresh_token", 
             path="/session/",
-            domain=settings.BASE_SYSTEM_DOMAIN
+            domain=settings.BASE_SYSTEM_DOMAIN,
+            secure=True,
+            samesite='None',
         )
-        response.delete_cookie('access_token')
+        response.delete_cookie(
+            'access_token',
+            domain=settings.BASE_SYSTEM_DOMAIN,
+            secure=True,
+            samesite='None',
+        )
 
         return response
     except Exception as e:
