@@ -105,19 +105,24 @@ def logout(request):
     try:
         response = Response({'message': 'Logout concluído com sucesso'}, status=status.HTTP_200_OK)
 
-        response.delete_cookie(
-            "refresh_token", 
+        response.set_cookie(
+            "refresh_token",
+            "",
+            max_age=0,
             path="/session/",
             domain=settings.BASE_SYSTEM_DOMAIN,
             secure=True,
             samesite='None',
         )
-        response.delete_cookie(
-            'access_token',
+        
+        response.set_cookie(
+            "access_token",
+            "",
+            max_age=0,
             domain=settings.BASE_SYSTEM_DOMAIN,
             secure=True,
             samesite='None',
-        )
+)
 
         return response
     except Exception as e:
