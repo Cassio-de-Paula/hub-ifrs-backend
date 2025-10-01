@@ -31,7 +31,7 @@ def login_with_google(request):
                 samesite='None',
                 max_age=3600*24*7,
                 path='/session/',
-                domain=settings.APP_URL
+                domain=settings.BASE_SYSTEM_DOMAIN
             )
 
             response.set_cookie(
@@ -41,7 +41,7 @@ def login_with_google(request):
                 secure=True,
                 samesite='None',
                 path='/',
-                domain=settings.APP_URL
+                domain=settings.BASE_SYSTEM_DOMAIN
             )
 
         return response
@@ -77,7 +77,7 @@ def login(request):
                 samesite='None',
                 max_age=3600*24*7,
                 path="/session/",
-                domain=settings.APP_URL
+                domain=settings.BASE_SYSTEM_DOMAIN
             )
 
             response.set_cookie(
@@ -87,7 +87,7 @@ def login(request):
                 secure=True,
                 samesite='None',
                 path="/",
-                domain=settings.APP_URL
+                domain=settings.BASE_SYSTEM_DOMAIN
             )
 
         return response
@@ -108,7 +108,7 @@ def logout(request):
         response.delete_cookie(
             "refresh_token", 
             path="/session/",
-            domain=settings.APP_URL
+            domain=settings.BASE_SYSTEM_DOMAIN
         )
         response.delete_cookie('access_token')
 
