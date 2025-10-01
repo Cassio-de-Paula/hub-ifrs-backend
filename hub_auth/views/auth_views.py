@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from google.auth.exceptions import GoogleAuthError
 from ..utils.format_validation_errors import format_validation_errors
+from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +30,8 @@ def login_with_google(request):
                 secure=True,
                 samesite='None',
                 max_age=3600*24*7,
-                path='/session/'
+                path='/session/',
+                domain=settings.APP_URL
             )
 
             response.set_cookie(
@@ -38,7 +40,8 @@ def login_with_google(request):
                 httponly=True,
                 secure=True,
                 samesite='None',
-                path='/'
+                path='/',
+                domain=settings.APP_URL
             )
 
         return response
@@ -74,6 +77,7 @@ def login(request):
                 samesite='None',
                 max_age=3600*24*7,
                 path="/session/",
+                domain=settings.APP_URL
             )
 
             response.set_cookie(
@@ -83,6 +87,7 @@ def login(request):
                 secure=True,
                 samesite='None',
                 path="/",
+                domain=settings.APP_URL
             )
 
         return response
@@ -100,7 +105,11 @@ def logout(request):
     try:
         response = Response({'message': 'Logout concluído com sucesso'}, status=status.HTTP_200_OK)
 
-        response.delete_cookie("refresh_token", path="/session/")
+        response.delete_cookie(
+            "refresh_token", 
+            path="/session/",
+            domain=settings.APP_URL
+        )
         response.delete_cookie('access_token')
 
         return response
