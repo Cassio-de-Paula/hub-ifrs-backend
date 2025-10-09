@@ -33,7 +33,7 @@ class UserService:
             'access_profile': access_profile
         })
 
-        if access_profile == 'aluno':
+        if access_profile == 'aluno' and 'admin' not in user.groups.name:
             UserService.add_group(user, 'user')
 
         if password and created:
@@ -168,7 +168,6 @@ class UserService:
         group_list = request_data.get('groups')
         is_abstract = request_data.get('is_abstract')
 
-        print(group_list)
 
         if not user_id or not group_list:
             raise ValueError("ID do usuário e lista de grupos são obrigatórios.")
@@ -185,7 +184,6 @@ class UserService:
         if not group_ids:
             raise ValueError("Nenhum grupo válido foi fornecido.")
 
-        # Atualizar o usuário
         user.is_active = True
         user.is_abstract = is_abstract
         user.groups.set(group_ids)
