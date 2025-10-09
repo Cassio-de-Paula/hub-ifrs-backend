@@ -33,7 +33,7 @@ class UserService:
             'access_profile': access_profile
         })
 
-        if access_profile == 'aluno' and 'admin' not in user.groups.name:
+        if user.access_profile == 'aluno':
             UserService.add_group(user, 'user')
 
         if password and created:
