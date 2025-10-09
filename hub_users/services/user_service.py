@@ -192,7 +192,8 @@ class UserService:
     @staticmethod
     def decline_request(request_id):
         user = get_object_or_404(CustomUser, pk=uuid.UUID(request_id))
-        if user.custom_password: 
+
+        if getattr(user, "custom_password", None): 
             user_password = Password.objects.get(user=user)
 
             user_password.delete()
