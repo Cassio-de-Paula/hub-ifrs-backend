@@ -193,7 +193,7 @@ class UserService:
     def decline_request(request_id):
         user = get_object_or_404(CustomUser, pk=uuid.UUID(request_id))
 
-        if getattr(user, "custom_password", None): 
+        if hasattr(user, "custom_password", None): 
             user_password = Password.objects.get(user=user)
 
             user_password.delete()
